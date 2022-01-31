@@ -100,3 +100,8 @@ func _on_Hurtbox_invincibility_started():
 
 func _on_Hurtbox_invincibility_ended():
 	blinkAnimationPlayer.play("Stop")
+
+
+func _on_AreaBox_body_entered(body):
+	if body == self:
+		get_tree().change_scene("res://Story.tscn")
