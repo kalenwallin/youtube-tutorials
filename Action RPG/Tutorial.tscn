@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://World/Tree.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Camera2D.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Fonts/pixel.tres" type="DynamicFont" id=11]
+[ext_resource path="res://Enemies/Hannes/Hannes.tscn" type="PackedScene" id=12]
 
 [sub_resource type="TileSet" id=1]
 0/name = "DirtTileset.png 0"
@@ -651,6 +652,9 @@ position = Vector2( 137.646, 97.0947 )
 [node name="Collision" type="CollisionShape2D" parent="NextLevel/AreaBox"]
 position = Vector2( 0.00320435, -1.92735 )
 shape = SubResource( 50 )
+
+[node name="Hannes" parent="." instance=ExtResource( 12 )]
+position = Vector2( -750.393, 98.986 )
 [connection signal="body_entered" from="NextLevel/AreaBox" to="YSort/Player" method="_on_AreaBox_body_entered"]
 
 [editable path="Camera2D"]
