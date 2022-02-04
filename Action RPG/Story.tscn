@@ -526,16 +526,20 @@ position = Vector2( 384, 192 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 margin_left = 22.0
-margin_top = 44.0
+margin_top = 19.0
 margin_right = 315.0
-margin_bottom = 114.0
+margin_bottom = 116.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 custom_styles/normal = SubResource( 50 )
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
-bbcode_text = "[center]Oh no! Our professor Hannes ate fermented shark and turned into an evil villain. We must stop him before he destroys all of Iceland![/center]"
-text = "Oh no! Our professor Hannes ate fermented shark and turned into an evil villain. We must stop him before he destroys all of Iceland!"
+bbcode_text = "[center]Oh no! 
+Our professor Hannes ate fermented shark and turned into an evil villain. He also lost all his hair. 
+We must stop him before he destroys all of Iceland![/center]"
+text = "Oh no! 
+Our professor Hannes ate fermented shark and turned into an evil villain. He also lost all his hair. 
+We must stop him before he destroys all of Iceland!"
 fit_content_height = true
 __meta__ = {
 "_edit_use_anchors_": false
