@@ -1,19 +1,49 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Enemies/Hannes/Hannes.gd" type="Script" id=1]
 [ext_resource path="res://Shadows/SmallShadow.png" type="Texture" id=2]
 [ext_resource path="res://Overlap/Hurtbox.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Player/PlayerShader.tres" type="Material" id=4]
-[ext_resource path="res://Stats.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Enemies/Hannes/HannesShader.tres" type="Material" id=4]
+[ext_resource path="res://Enemies/Hannes/HannesStats.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Overlap/Hitbox.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Overlap/SoftCollision.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Enemies/WanderController.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Fonts/pixel.tres" type="DynamicFont" id=10]
 [ext_resource path="res://Enemies/Hannes/HannesSheet.png" type="Texture" id=11]
 
 [sub_resource type="Animation" id=1]
-resource_name = "HoverDown"
+resource_name = "HStart"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "HStop"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=3]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -41,8 +71,7 @@ tracks/1/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "HoverLeft"
+[sub_resource type="Animation" id=4]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -70,8 +99,7 @@ tracks/1/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "HoverRight"
+[sub_resource type="Animation" id=5]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -99,8 +127,7 @@ tracks/1/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "HoverUp"
+[sub_resource type="Animation" id=6]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -128,55 +155,51 @@ tracks/1/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "Start"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:material:shader_param/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "HoverLeft"
 
-[sub_resource type="Animation" id=6]
-resource_name = "Stop"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:material:shader_param/active")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "HoverDown"
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "HoverRight"
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "HoverUp"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=11]
+blend_point_0/node = SubResource( 7 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 8 )
+blend_point_1/pos = Vector2( 0, 1 )
+blend_point_2/node = SubResource( 9 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 10 )
+blend_point_3/pos = Vector2( 0, -1 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachine" id=12]
+states/Hover/node = SubResource( 11 )
+states/Hover/position = Vector2( 644, 104 )
+start_node = "Hover"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=13]
+
+[sub_resource type="CircleShape2D" id=14]
 radius = 4.0
 
-[sub_resource type="CapsuleShape2D" id=8]
+[sub_resource type="CapsuleShape2D" id=15]
 radius = 7.0
 height = 4.0
 
-[sub_resource type="CircleShape2D" id=9]
-radius = 148.161
+[sub_resource type="CircleShape2D" id=16]
+radius = 439.211
 
-[sub_resource type="CircleShape2D" id=10]
-radius = 12.3737
+[sub_resource type="CircleShape2D" id=17]
+radius = 9.15805
 
-[sub_resource type="CircleShape2D" id=11]
+[sub_resource type="CircleShape2D" id=18]
 radius = 5.0
-
-[sub_resource type="Theme" id=12]
 
 [node name="Hannes" type="KinematicBody2D"]
 collision_layer = 16
@@ -184,9 +207,10 @@ script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = ExtResource( 4 )
-position = Vector2( -1.45737, -21.3854 )
+position = Vector2( -1.45737, -19.3854 )
 texture = ExtResource( 11 )
 hframes = 4
+frame = 2
 
 [node name="ShadowSprite" type="Sprite" parent="."]
 position = Vector2( 0.111358, 0.111364 )
@@ -195,16 +219,23 @@ texture = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite")
-anims/HoverDown = SubResource( 1 )
-anims/HoverLeft = SubResource( 2 )
-anims/HoverRight = SubResource( 3 )
-anims/HoverUp = SubResource( 4 )
-anims/Start = SubResource( 5 )
-anims/Stop = SubResource( 6 )
+anims/HStart = SubResource( 1 )
+anims/HStop = SubResource( 2 )
+anims/HoverDown = SubResource( 3 )
+anims/HoverLeft = SubResource( 4 )
+anims/HoverRight = SubResource( 5 )
+anims/HoverUp = SubResource( 6 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 12 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 13 )
+parameters/Hover/blend_position = Vector2( 0, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource( 7 )
+shape = SubResource( 14 )
 
 [node name="Hurtbox" parent="." instance=ExtResource( 3 )]
 visible = false
@@ -212,63 +243,36 @@ collision_layer = 8
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2( 0, -13 )
-shape = SubResource( 8 )
+shape = SubResource( 15 )
 
-[node name="Stats" parent="." instance=ExtResource( 5 )]
-max_health = 1
+[node name="HannesStats" parent="." instance=ExtResource( 5 )]
 
 [node name="PlayerDetectionZone" parent="." instance=ExtResource( 6 )]
 
 [node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
 modulate = Color( 1, 1, 1, 0.454902 )
-shape = SubResource( 9 )
+shape = SubResource( 16 )
 
 [node name="Hitbox" parent="." instance=ExtResource( 7 )]
 visible = false
 collision_mask = 4
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
-visible = false
-position = Vector2( 0, -22 )
-shape = SubResource( 10 )
+position = Vector2( 0.707115, -5.20621 )
+shape = SubResource( 17 )
 
 [node name="SoftCollision" parent="." instance=ExtResource( 8 )]
 visible = false
 
 [node name="CollisionShape2D" parent="SoftCollision" index="0"]
 visible = false
-shape = SubResource( 11 )
+shape = SubResource( 18 )
 
 [node name="WanderController" parent="." instance=ExtResource( 9 )]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="TextureProgress" type="TextureProgress" parent="CanvasLayer"]
-margin_left = -0.667419
-margin_top = 16.3439
-margin_right = 320.333
-margin_bottom = 31.3439
-theme = SubResource( 12 )
-step = 20.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="CanvasLayer"]
-margin_left = 120.0
-margin_top = 3.0
-margin_right = 207.0
-margin_bottom = 17.0
-custom_fonts/font = ExtResource( 10 )
-text = "Evil Hannes"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="invincibility_ended" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_ended"]
 [connection signal="invincibility_started" from="Hurtbox" to="." method="_on_Hurtbox_invincibility_started"]
-[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
+[connection signal="no_health" from="HannesStats" to="." method="_on_HannesStats_no_health"]
 
 [editable path="Hurtbox"]
 

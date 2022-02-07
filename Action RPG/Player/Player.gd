@@ -26,10 +26,16 @@ onready var hurtbox = $Hurtbox
 onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 
 func _ready():
+	stats.set_health(stats.max_health)
 	randomize()
-	stats.connect("no_health", self, "queue_free")
+	stats.connect("no_health", self, "no_player_health")
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
+
+func no_player_health():
+	queue_free()
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://Death.tscn")
 
 func _physics_process(delta):
 	match state:
@@ -101,7 +107,7 @@ func _on_Hurtbox_invincibility_started():
 func _on_Hurtbox_invincibility_ended():
 	blinkAnimationPlayer.play("Stop")
 
-
 func _on_AreaBox_body_entered(body):
 	if body == self:
+		# warning-ignore:return_value_discarded
 		get_tree().change_scene("res://Story.tscn")

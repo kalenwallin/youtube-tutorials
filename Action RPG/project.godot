@@ -22,6 +22,7 @@ config/icon="res://icon.png"
 [autoload]
 
 PlayerStats="*res://Player/PlayerStats.tscn"
+HannesStats="*res://Enemies/Hannes/HannesStats.tscn"
 
 [display]
 

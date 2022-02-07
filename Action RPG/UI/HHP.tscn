@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://UI/HHP.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/pixel.tres" type="DynamicFont" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.780392, 0.137255, 0.137255, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.203922, 0.203922, 0.203922, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+
+[node name="HannesHP" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HPBar" type="ProgressBar" parent="."]
+margin_left = 10.0
+margin_top = 18.0
+margin_right = 309.0
+margin_bottom = 32.0
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+max_value = 20.0
+step = 1.0
+value = 20.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HPTitle" type="Label" parent="."]
+margin_left = 120.0
+margin_top = 3.0
+margin_right = 207.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 3 )
+text = "Evil Hannes"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
