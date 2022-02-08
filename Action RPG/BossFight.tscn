@@ -1401,7 +1401,7 @@ margin_right = 63.0
 margin_bottom = 14.0
 
 [node name="HannesHP" parent="CanvasLayer" instance=ExtResource( 11 )]
-margin_top = 135.0
-margin_bottom = 135.0
+margin_top = 139.0
+margin_bottom = 139.0
 
 [editable path="Camera2D"]
