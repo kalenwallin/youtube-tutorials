@@ -534,6 +534,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 custom_styles/normal = SubResource( 50 )
 custom_fonts/normal_font = ExtResource( 1 )
+custom_colors/default_color = Color( 0.843137, 0.843137, 0.843137, 1 )
 bbcode_enabled = true
 bbcode_text = "[center]Oof!
 You died.

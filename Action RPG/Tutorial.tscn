@@ -610,6 +610,7 @@ margin_top = 12.0962
 margin_right = -719.733
 margin_bottom = 43.0962
 custom_fonts/font = ExtResource( 11 )
+custom_colors/font_color = Color( 0.843137, 0.843137, 0.843137, 1 )
 text = "Use \"WASD/Arrow\" 
 keys to move"
 align = 1
@@ -623,6 +624,7 @@ margin_top = 11.7787
 margin_right = -513.868
 margin_bottom = 42.7787
 custom_fonts/font = ExtResource( 11 )
+custom_colors/font_color = Color( 0.843137, 0.843137, 0.843137, 1 )
 text = "Use \"Z\" key
 to roll"
 align = 1
@@ -636,6 +638,7 @@ margin_top = 11.7787
 margin_right = -279.375
 margin_bottom = 42.7787
 custom_fonts/font = ExtResource( 11 )
+custom_colors/font_color = Color( 0.843137, 0.843137, 0.843137, 1 )
 text = "Use \"X\" key
 to attack"
 align = 1
