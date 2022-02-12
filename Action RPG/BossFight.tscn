@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://World/DirtTileset.png" type="Texture" id=10]
 [ext_resource path="res://UI/HHP.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Enemies/Hannes/Hannes.tscn" type="PackedScene" id=12]
+[ext_resource path="res://BossFight.gd" type="Script" id=13]
 
 [sub_resource type="TileSet" id=1]
 0/name = "DirtTileset.png 0"
@@ -488,6 +489,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 0/z_index = 0
 
 [node name="World" type="Node2D"]
+script = ExtResource( 13 )
 
 [node name="Background" type="Sprite" parent="."]
 position = Vector2( 160, 90 )
@@ -1403,5 +1405,9 @@ margin_bottom = 14.0
 [node name="HannesHP" parent="CanvasLayer" instance=ExtResource( 11 )]
 margin_top = 139.0
 margin_bottom = 139.0
+
+[node name="WinTimer" type="Timer" parent="."]
+[connection signal="tree_exited" from="YSort/Hannes" to="." method="_on_Hannes_tree_exited"]
+[connection signal="timeout" from="WinTimer" to="." method="_on_WinTimer_timeout"]
 
 [editable path="Camera2D"]

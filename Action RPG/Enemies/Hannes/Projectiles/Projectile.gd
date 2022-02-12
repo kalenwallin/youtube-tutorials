@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
+const EnemyDeathEffect = preload("res://Effects/ProjectileDeathEffect.tscn")
 
 enum {
 	NORTH, #0
@@ -13,9 +13,7 @@ enum {
 	NORTHWEST #7
 }
 
-export var ACCELERATION = 300
-export var MAX_SPEED = 50
-export var FRICTION = 1000
+export var SPEED = 50
 export var STATE = NORTH
 
 var velocity = Vector2.ZERO
@@ -28,69 +26,55 @@ onready var softCollision = $SoftCollision
 onready var movementController = $MovementController
 onready var animationPlayer = $AnimationPlayer
 
+func init(direction, hannesPosition):
+	STATE = direction
+	global_position = hannesPosition
+	return self
+
 func _ready():
 	pass
 
 func _physics_process(delta):
-	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
+	knockback = knockback.move_toward(Vector2.ZERO, delta)
 	knockback = move_and_slide(knockback)
 	
 	match STATE:
 		NORTH:
-			velocity = velocity.move_toward(Vector2(0, 1), FRICTION * delta)
+			sprite.animation = 'N'
+			velocity = velocity.move_toward(Vector2(0, -1), delta)
 			
 		NORTHEAST:
-			velocity = velocity.move_toward(Vector2(1, 1), FRICTION * delta)
+			sprite.animation = 'NE'
+			velocity = velocity.move_toward(Vector2(1, -1), delta)
 			
 		EAST:
-			velocity = velocity.move_toward(Vector2(1, 0), FRICTION * delta)
+			sprite.animation = 'E'
+			velocity = velocity.move_toward(Vector2(1, 0), delta)
 			
 		SOUTHEAST:
-			velocity = velocity.move_toward(Vector2(1, -1), FRICTION * delta)
+			sprite.animation = 'SE'
+			velocity = velocity.move_toward(Vector2(1, 1), delta)
 			
 		SOUTH:
-			velocity = velocity.move_toward(Vector2(0, -1), FRICTION * delta)
+			sprite.animation = 'S'
+			velocity = velocity.move_toward(Vector2(0, 1), delta)
 			
 		SOUTHWEST:
-			velocity = velocity.move_toward(Vector2(-1, -1), FRICTION * delta)
+			sprite.animation = 'SW'
+			velocity = velocity.move_toward(Vector2(-1, 1), delta)
 			
 		WEST:
-			velocity = velocity.move_toward(Vector2(-1, 0), FRICTION * delta)
+			sprite.animation = 'W'
+			velocity = velocity.move_toward(Vector2(-1, 0), delta)
 			
 		NORTHWEST:
-			velocity = velocity.move_toward(Vector2(-1, 1), FRICTION * delta)
+			sprite.animation = 'NW'
+			velocity = velocity.move_toward(Vector2(-1, -1), delta)
 			
-#		IDLE:
-#			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-#			seek_player()
-#			if wanderController.get_time_left() == 0:
-#				update_wander()
-#				
-#		WANDER:
-#			if wanderController.get_time_left() == 0:
-#				update_wander()
-#			accelerate_towards_point(wanderController.target_position, delta)
-#			if global_position.distance_to(wanderController.target_position) <= WANDER_TARGET_RANGE:
-#				update_wander()
-			
-#		CHASE:
-#			var player = playerDetectionZone.player
-#			if player != null:
-#				accelerate_towards_point(player.global_position, delta)
-#			else:
-#				state = IDLE
-
-	if softCollision.is_colliding():
-		velocity += softCollision.get_push_vector() * delta * 400
+	velocity = velocity.normalized() * SPEED
 	velocity = move_and_slide(velocity)
-
-func accelerate_towards_point(point, delta):
-	var direction = global_position.direction_to(point)
-	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-	sprite.flip_h = velocity.x < 0
-
-func update_movement():
-	movementController.start_movement_timer(100) # amount of time before projectile explodes
+	if get_slide_count():
+		stats.health = 0
 
 func _on_Hurtbox_area_entered(area):
 	stats.health -= area.damage
@@ -109,3 +93,10 @@ func _on_Hurtbox_invincibility_started():
 
 func _on_Hurtbox_invincibility_ended():
 	animationPlayer.play("Stop")
+
+func _on_Hitbox_area_entered(_area):
+	stats.health = 0
+
+func _on_SoftCollision_area_entered(_area):
+	pass
+	#stats.health = 0

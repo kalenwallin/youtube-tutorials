@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
+const ProjectileScene = preload("res://Enemies/Hannes/Projectiles/Projectile.tscn")
 
 export var ACCELERATION = 150
 export var MAX_SPEED = 25
@@ -26,6 +27,11 @@ onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
+onready var cardinalTimer = $ShootCardinal
+onready var ordinalTimer = $ShootOrdinal
+
+var main
+var projectiles = [0,0,0,0,0,0,0,0]
 
 func _ready():
 	if sprite.frame == 0:
@@ -38,6 +44,8 @@ func _ready():
 		sprite.offset.x = 2
 	state = pick_random_state([IDLE, WANDER])
 	Hstats.set_health(Hstats.max_health)
+	ordinalTimer.start(1)
+	main = get_tree().current_scene
 
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
@@ -98,8 +106,6 @@ func _on_HannesStats_no_health():
 	var enemyDeathEffect = EnemyDeathEffect.instance()
 	get_parent().add_child(enemyDeathEffect)
 	enemyDeathEffect.global_position = global_position
-	# warning-ignore:return_value_discarded
-	get_tree().change_scene("res://Win.tscn")
 
 func _on_Hurtbox_invincibility_started():
 	animationPlayer.play("HStart")
@@ -107,3 +113,22 @@ func _on_Hurtbox_invincibility_started():
 func _on_Hurtbox_invincibility_ended():
 	animationPlayer.play("HStop")
 
+func _shoot_cardinal():
+	var start_position = global_position
+	for n in range(0,8,2):
+		projectiles[n] = ProjectileScene.instance().init(n, start_position)
+		main.add_child(projectiles[n])
+
+func _shoot_ordinal():
+	var start_position = global_position
+	for n in range(1,8,2):
+		projectiles[n] = ProjectileScene.instance().init(n, start_position)
+		main.add_child(projectiles[n])
+
+func _on_ShootOrdinal_timeout():
+	_shoot_ordinal()
+	cardinalTimer.start(2)
+
+func _on_ShootCardinal_timeout():
+	_shoot_cardinal()
+	ordinalTimer.start(2)
