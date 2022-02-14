@@ -536,10 +536,12 @@ custom_fonts/normal_font = ExtResource( 1 )
 custom_colors/default_color = Color( 0.843137, 0.843137, 0.843137, 1 )
 bbcode_enabled = true
 bbcode_text = "[center]Oh no! 
-Our professor Hannes ate fermented shark and turned into an evil villain. He also lost all his hair. 
+Our professor Hannes ate fermented shark and turned into an evil villain. 
+He also lost all his hair. 
 We must stop him before he destroys all of Iceland![/center]"
 text = "Oh no! 
-Our professor Hannes ate fermented shark and turned into an evil villain. He also lost all his hair. 
+Our professor Hannes ate fermented shark and turned into an evil villain. 
+He also lost all his hair. 
 We must stop him before he destroys all of Iceland!"
 fit_content_height = true
 __meta__ = {
